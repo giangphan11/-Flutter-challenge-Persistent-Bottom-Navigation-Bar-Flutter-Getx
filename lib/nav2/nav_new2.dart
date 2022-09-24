@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:getx_demo/bottom_navigation/screens/page_a.dart';
@@ -33,7 +35,9 @@ final screensData = <ScreenModel>[
 class RootController extends GetxController {
   final navMenuIndex = 0.obs;
 
-  ScreenModel get currentScreenModel => screensData[navMenuIndex()];
+  var dataFromDetail = 0.obs;
+
+  ScreenModel get currentScreenModel => screensData[navMenuIndex.value];
   Color? get navMenuItemColor => currentScreenModel.colors;
 
   int? get getCurrentNavKey => currentScreenModel.navKey;
@@ -51,10 +55,13 @@ class RootController extends GetxController {
       BottomNavigationBarItem(icon: Icon(Icons.widgets), label: e.name))
       .toList();
 
-  void openDetails(int shade) {
+  T? cast<T>(x) => x is T ? x : null;
+
+  void openDetails(int shade) async {
     final model = currentScreenModel;
-    Get.to(
-      () => PageColorDetails(
+    dataFromDetail.value = -1;
+    var data = await Get.to(
+          () => PageColorDetails(
         title: model.name,
         color: model.colors,
         shade: shade,
@@ -63,6 +70,7 @@ class RootController extends GetxController {
       transition: Transition.fade,
       id: model.navKey,
     );
+    dataFromDetail.value = cast<int>(data) ?? -1;
   }
 }
 
@@ -87,7 +95,11 @@ class _Root extends GetView<RootController> {
       ),
     ), onWillPop: () async {
       // we need to know the exact nav key of the nested nav
+      if(controller.dataFromDetail.value == 113){
+        return true;
+      }
       int id = controller.getCurrentNavKey ?? -1;
+      print(controller.dataFromDetail.value);
       Get.back(id: id);
       return false;
     });
@@ -173,11 +185,13 @@ class PageColorDetails extends StatelessWidget {
             SizedBox(height: 20,),
             GestureDetector(
               onTap: (){
-                if(model == null){
-                  Get.to(() => PageA());
-                }else{
-                  Get.to(() => PageA(), id: model?.navKey ?? -1);
-                }
+                Get.back(result: 113, id: model?.navKey ?? -1);
+
+                // if(model == null){
+                //   Get.to(() => PageA());
+                // }else{
+                //   Get.to(() => PageA(), id: model?.navKey ?? -1);
+                // }
 
               },
               child: Container(

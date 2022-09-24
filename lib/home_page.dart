@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_demo/audio/audio_page.dart';
+import 'package:getx_demo/audio2/audio_page2.dart';
 import 'package:getx_demo/bottom_navigation/main_bottom_navigation.dart';
 import 'package:getx_demo/controllers/tap_controller.dart';
 import 'package:getx_demo/first_page.dart';
 import 'package:getx_demo/nav2/nav_new2.dart';
+import 'package:getx_demo/purcharse/purchase_page.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({Key? key}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -125,7 +127,7 @@ class MyHomePage extends StatelessWidget {
             ),
             GestureDetector(
               onTap: (){
-                print("ge");
+                Get.to(() => TestAudioPage());
               },
               child: Container(
                 height: 40,
@@ -135,7 +137,68 @@ class MyHomePage extends StatelessWidget {
                     borderRadius: BorderRadius.circular(20)
                 ),
                 child: Center(
-                  child: Text("Tap",
+                  child: Text("Test music service",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white
+                    ),),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Get.to(() => AudioPage2());
+              },
+              child: Container(
+                height: 40,
+                margin: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: Center(
+                  child: Text("Test music service 2",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white
+                    ),),
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: (){
+                Get.to(() => PurcharsePage());
+              },
+              child: Container(
+                height: 40,
+                margin: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: Center(
+                  child: Text("In app purcharse (consumables)",
+                    style: TextStyle(
+                        fontWeight: FontWeight.w500,
+                        color: Colors.white
+                    ),),
+                ),
+              ),
+            ),
+
+            GestureDetector(
+              onTap: (){
+
+              },
+              child: Container(
+                height: 40,
+                margin: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                    color: Colors.blueAccent,
+                    borderRadius: BorderRadius.circular(20)
+                ),
+                child: Center(
+                  child: Text("In app purcharse (non-consumables)",
                     style: TextStyle(
                         fontWeight: FontWeight.w500,
                         color: Colors.white
